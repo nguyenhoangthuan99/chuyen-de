@@ -1,2 +1,2 @@
 # Installation
-tesst
+detail Installation steps in backend folder
