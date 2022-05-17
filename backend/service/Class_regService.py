@@ -35,6 +35,7 @@ class Class_regService:
             return await self.connector.search(Id,semester,classId,limit,offset)
         else:
             li = await self.connector.search(Id,semester,classId,limit,offset)
+            li = [x.Id for x in li]
             res = []
             for x in li:
                 acc = await self.accountService.get_account_by_id(x)
@@ -88,6 +89,8 @@ class Class_regService:
         semester = await self.oteService.get_semester_class_config()
         tmp ={}
         state = await self.oteService.validate_regis_class_time(current_user)
+        if state == False:
+            raise HTTPException(status_code=410, detail="không phải thời điểm đăng kí")
 
         # kiểm tra trùng thời khóa biểu
         await self.validate_register(classreg.classes,current_user)
@@ -138,3 +141,9 @@ class Class_regService:
             to_update.append(class_)
         await self.classService.update(to_update)
         return True
+
+    async def class_del(self, classId:List[Optional[str]], current_user: Account):
+        state = await self.oteService.validate_regis_class_time(current_user)
+        if state == False:
+            raise HTTPException(status_code=410, detail="không phải thời điểm đăng kí")
+        return await self.connector.classdel(current_user.Id, classId)
