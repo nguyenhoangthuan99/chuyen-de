@@ -91,12 +91,14 @@ class ClassConnector:
         my_cursor = db.cursor()
         print(sql)
         my_cursor.execute(sql)
+
         try:
             records = my_cursor.fetchall()
         except:
             my_cursor.close()
             db.close()
             return []
+
         results = []
         for row in records:
             row = list(row)
@@ -187,6 +189,7 @@ class ClassConnector:
         else:
             results = self.do_count(sql)[0]
         return results
+
     async def count_class_like_id(self,classId):
         db = mysql.connector.connect(
             host="localhost",
@@ -344,6 +347,7 @@ class ClassConnector:
         my_cursor.close()
         db.close()
         return results
+
     async def get_class_by_id(self, Id=None):
         db = mysql.connector.connect(
             host="localhost",
@@ -377,4 +381,5 @@ class ClassConnector:
             ))
         my_cursor.close()
         db.close()
+
         return results

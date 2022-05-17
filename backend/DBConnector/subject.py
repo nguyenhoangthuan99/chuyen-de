@@ -228,6 +228,7 @@ class SubjectConnector:
         mycursor.close()
         db.close()
         return results
+
     async def count_subject_like_id(self,subjectID):
         db = mysql.connector.connect(
             host="localhost",
