@@ -24,6 +24,12 @@ class SubjectService:
     async def get_subject_by_id(self, subjectId: Optional[str] = None,):
         return await self.connector.get_subject_by_id(subjectId)
 
+    async def count_subject_like_id(self,subjectId):
+        return await self.connector.count_subject_like_id(subjectId)
+
+    async def get_subject_like_id(self,subjectId,limit,offset):
+        return await self.connector.get_subject_like_id(subjectId,limit,offset)
+
     async def search(self, limit=20, offset=0, filters: Dict = {}, **kwargs):
         return await self.connector.search(limit=limit, offset=offset, filters=filters, **kwargs)
 
@@ -38,3 +44,16 @@ class SubjectService:
 
     async def update_satus(self, subjectId: str, status: int):
         return await self.connector.update_status(subjectId, status)
+
+    async def import_file(self, content):
+        df = CSVUtils.read_content(content)
+        subjects = CSVUtils.validate_subject(df)
+        res = await self.connector.insert(subjects)
+        return res
+
+    async def export_file(self, subjects: List[Subject]):
+        subjects = [subject.dict() for subject in subjects]
+        data_df = pd.DataFrame(subjects)
+        stream = io.BytesIO()
+        data_df.to_csv(stream, index=False, encoding='utf-8')
+        return stream

@@ -19,6 +19,15 @@ async def get_by_id(subjectId):
     subject = await subject_service.get_subject_by_id(subjectId)
     return {"subject": subject}
 
+@router.get("/count-like-id")
+async def count_subject_like_id(subjectId:str):
+    return await subject_service.count_subject_like_id(subjectId)
+
+@router.get("/get-like-id")
+async def get_like_id(subjectId,limit:str=20,offset:str=0):
+    subject = await subject_service.get_subject_like_id(subjectId,limit,offset)
+    return {"subject": subject}
+
 @router.get("/search")
 async def search_subject(
         subjectId: str = None,
@@ -72,6 +81,7 @@ async def checkSubjectId(subjectId:str):
         return False
     else:
         return True
+
 @router.get("/count")
 async def count_subject(
         subjectId: str = None,
@@ -132,3 +142,24 @@ async def unlock_subject(subjectId, current_user: Account = Depends(get_current_
     res = await subject_service.update_satus(subjectId, 1)
     return res
 
+
+@router.post("/import")
+async def import_subject(file: UploadFile = File(...)):#, current_user: Account = Depends(get_current_active_user)):
+    # if current_user.role < 2:
+    #     raise HTTPException(status_code=400, detail=f"Tài khoản với vai trò {current_user.role}"
+    #                                                 f" không có quyền import học phần")
+
+    content = await file.read()
+    res = await subject_service.import_file(content)
+    return res
+
+@router.get("/get-all-subject-id")
+async def get_all_subject_id(status=1):
+    status = 1
+    return await subject_service.get_all_subject_id(status)
+
+@router.post("/export")
+async def export_subject(subjects: List[Subject]):
+    res = await subject_service.export_file(subjects)
+    return res
+    
