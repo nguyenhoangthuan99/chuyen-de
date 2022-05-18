@@ -23,6 +23,7 @@ class SubjectConnector:
                                   " programsemester=%s, schoolId=%s, status=%s, note=%s WHERE subjectId=%s "
 
     @staticmethod
+
     def validate(subject: Subject):
         if subject.subjectId is None or isinstance(subject.subjectId, str) is False:
             logging.error(f"Field `subjectId` is null in subject: {subject.dict()}")
@@ -256,6 +257,7 @@ class SubjectConnector:
         mycursor.close()
         db.close()
         return results[0]
+
     async def get_subject_like_id(self,subjectID,limit,offset):
         db = mysql.connector.connect(
             host="localhost",
