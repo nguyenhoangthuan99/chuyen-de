@@ -215,6 +215,7 @@ class ClassConnector:
         my_cursor.close()
         db.close()
         return results[0]
+
     async def count_class_like_subjectId(self,subjectId,semester):
         db = mysql.connector.connect(
             host="localhost",
@@ -240,6 +241,7 @@ class ClassConnector:
         my_cursor.close()
         db.close()
         return results[0]
+
     async def get_class_like_subjectId(self,subjectId,semester,limit,offset):
         db = mysql.connector.connect(
             host="localhost",
@@ -276,6 +278,7 @@ class ClassConnector:
         my_cursor.close()
         db.close()
         return results
+
     async def get_class_like_id(self,classId,limit,offset):
         db = mysql.connector.connect(
             host="localhost",
