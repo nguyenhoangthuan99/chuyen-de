@@ -31,23 +31,26 @@ class CSVUtils:
         
         if not (sorted(cols)==sorted(list_col)) :
             raise HTTPException(status_code=422, detail="Invalid format")
-        
+        try:
         #if True:
-        for col in list_col:
-            if col in ["Id","status","schoolyear","maxcredit"]:
-                df[col] = pd.to_numeric(df[col], downcast='integer')
-    
+            for col in list_col:
+                if col in ["Id","status","schoolyear","maxcredit"]:
+                    df[col] = pd.to_numeric(df[col], downcast='integer')
+        except:
+            raise HTTPException(status_code=422, detail=f"Invalid datatype int column {col}")
         return_accounts =[]
        
         for index, row in df.iterrows():
-            
-            if row["role"] == "ROLE_STUDENT":
-                row["schoolyear"] = int(row["schoolyear"])
-                row["maxcredit"] = int(row["maxcredit"])
-            else:
-                row = row.fillna(np.nan).replace([np.nan], [None])
-            return_accounts.append(Account(**row))
-            
+            try:
+                if row["role"] == "ROLE_STUDENT":
+                    row["schoolyear"] = int(row["schoolyear"])
+                    row["maxcredit"] = int(row["maxcredit"])
+                else:
+                    row = row.fillna(np.nan).replace([np.nan], [None])
+                return_accounts.append(Account(**row))
+            except:
+                #print(row)
+                raise HTTPException(status_code=422, detail="Invalid datatype")
         print("time validate in utils",time.time()-start)
         return return_accounts
 
@@ -57,11 +60,12 @@ class CSVUtils:
         cols = list(df.columns)
         if not (sorted(cols) == sorted(list_col)):
             raise HTTPException(status_code=422, detail="Invalid format")
-    
-        for col in list_col:
-            if col in ['classId', 'semester', 'day', 'timeStart', 'timeEnd', 'registered', 'limit', 'status']:
-                pd.to_numeric(df[col], downcast='integer')
-    
+        try:
+            for col in list_col:
+                if col in ['classId', 'semester', 'day', 'timeStart', 'timeEnd', 'registered', 'limit', 'status']:
+                    pd.to_numeric(df[col], downcast='integer')
+        except:
+            raise HTTPException(status_code=422, detail="Invalid datatype")
         return_classes = []
         for index, row in df.iterrows():
             day = row.day
@@ -71,17 +75,19 @@ class CSVUtils:
             if (day < 2) or (day > 7) or (timeStart < 1) or (timeStart > 12) or (timeEnd < 1) or (timeEnd > 12) or (
                     limit < 0) or (timeEnd < timeStart):
                 raise HTTPException(status_code=422, detail="Invalid data")
-            
-            return_classes.append(Class(**row))
-            
+            try:
+                return_classes.append(Class(**row))
+            except:
+                raise HTTPException(status_code=422, detail="Invalid datatype")
         return return_classes
 
     @staticmethod
     def validate_subject(df):
         # convert NAN to None
-       
-        df["note"] = df["note"].fillna("", inplace=True)
-        
+        try:
+            df["note"] = df["note"].fillna("", inplace=True)
+        except:
+            raise HTTPException(status_code=422, detail="No column 'note' in file")
 
         list_col = ["subjectId", "subjectName", "credit", "programsemester", "schoolId", "status", "note"]
         cols = list(df.columns)
@@ -91,9 +97,10 @@ class CSVUtils:
 
         for col in list_col:
             if col in ["credit", "programsemester"]:
-               
-                df[col] =pd.to_numeric(df[col], downcast='integer')
-                
+                try:
+                    df[col] =pd.to_numeric(df[col], downcast='integer')
+                except:
+                    raise HTTPException(status_code=422, detail=f"Field {col} must is integer not {df[col].dtype}")
 
         return_subjects = []
         for index, row in df.iterrows():
