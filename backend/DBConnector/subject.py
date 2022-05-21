@@ -228,6 +228,60 @@ class SubjectConnector:
         mycursor.close()
         db.close()
         return results
+    async def count_subject_like_id(self,subjectID):
+        db = mysql.connector.connect(
+            host="localhost",
+            user=self.config.db_username,
+            password=self.config.db_password,
+            database=self.config.db_name
+        )
+        mycursor = db.cursor()
+        sql = f"select count(*) from Subject where subjectId like '%{subjectID}%'"
+        print(sql)
+        mycursor.execute(sql)
+
+        try:
+            records = mycursor.fetchall()
+        except:
+            mycursor.close()
+            db.close()
+            return []
+        results = []
+
+        for row in records:
+            row = list(row)
+            results.append(row[0])
+
+        mycursor.close()
+        db.close()
+        return results[0]
+    async def get_subject_like_id(self,subjectID,limit,offset):
+        db = mysql.connector.connect(
+            host="localhost",
+            user=self.config.db_username,
+            password=self.config.db_password,
+            database=self.config.db_name
+        )
+        mycursor = db.cursor()
+        sql = f"select * from Subject where subjectId like '%{subjectID}%' limit {limit} offset {offset}"
+        print(sql)
+        mycursor.execute(sql)
+
+        try:
+            records = mycursor.fetchall()
+        except:
+            mycursor.close()
+            db.close()
+            return []
+        results = []
+
+        for row in records:
+            subject = Subject.from_list(row)
+            results.append(subject)
+
+        mycursor.close()
+        db.close()
+        return results
 
     async def get_subject_by_id(self, subjectID: Text):
         db = mysql.connector.connect(
@@ -255,6 +309,3 @@ class SubjectConnector:
         mycursor.close()
         db.close()
         return results
-
-
-
