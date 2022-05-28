@@ -15,7 +15,6 @@ from .SubjectService import SubjectService
 from .OTEService import OTEService
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="account/login")
 
-
 class ClassService:
     def __init__(self, ):
         self.connector = ClassConnector()
@@ -37,10 +36,12 @@ class ClassService:
                 raise HTTPException(status_code=422, detail=f"subjectId {clss.subjectId} not found")
             res.append(clss)
         return res
+
     async def search_collision(self,class_:Class):
         res = await self.connector.search_collision(semester=class_.semester,day=class_.day,location=class_.location,timeEnd=class_.timeEnd,timeStart=class_.timeStart)
         if len(res) and (class_.classId != res[0].classId):
             raise HTTPException(status_code=422, detail=f"lớp {class_.classId} trùng thời khóa biểu với lớp {res[0].classId}")
+
     async def transform(self,classes:List[Class]):
         res = []
         for c in classes:
@@ -75,10 +76,13 @@ class ClassService:
     async def search(self, limit=20, offset=0, **kwargs):
         classes =  await self.connector.search(limit=limit, offset=offset, **kwargs)
         return await self.aggerate(classes)
+
     async def count(self, **kwargs):
         return await self.connector.search(count=1, **kwargs)
+
     async def update (self,classes:List[Class]):
         return await self.connector.update(classes)
+
     async def update_one(self, _class: Class):
         await self.search_collision(_class)
         _class = await self.aggerate([_class])
