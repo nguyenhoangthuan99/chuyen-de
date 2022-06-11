@@ -11,7 +11,7 @@ class StatisticConnector:
     async def stat_subject_reg_by_school(self,semester):
         sql = f"SELECT schoolId ,count(DISTINCT subjectregister.Id) from Account,subjectregister WHERE Account.Id = subjectregister.Id and subjectregister.semester={semester} group by schoolId "
         db = mysql.connector.connect(
-                                            host="database",
+                                            host="localhost",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -38,17 +38,20 @@ class StatisticConnector:
     async def stat_class_reg_by_school(self,semester):
         sql = f"SELECT schoolId ,count(DISTINCT classregister.Id) from Account,classregister WHERE Account.Id = classregister.Id and classregister.semester={semester} group by schoolId "
         db = mysql.connector.connect(
-                                    host="database",
-                                    user=self.config.db_username,
-                                    password=self.config.db_password,
-                                    database=self.config.db_name
-                                    )     
+                                            host="localhost",
+                                            user=self.config.db_username,
+                                            password=self.config.db_password,
+                                            database=self.config.db_name
+                                            )     
         mycursor = db.cursor()
         
         mycursor.execute(sql)
-        
-        records = mycursor.fetchall()
-        
+        try:
+            records = mycursor.fetchall()
+        except:
+            mycursor.close()
+            db.close()
+            return []
         results = []
         for row in records:
             row = list(row)
@@ -67,17 +70,20 @@ class StatisticConnector:
                     order by fordate"
         print(sql)
         db = mysql.connector.connect(
-                                    host="database",
-                                    user=self.config.db_username,
-                                    password=self.config.db_password,
-                                    database=self.config.db_name
-                                    )     
+                                            host="localhost",
+                                            user=self.config.db_username,
+                                            password=self.config.db_password,
+                                            database=self.config.db_name
+                                            )     
         mycursor = db.cursor()
         
         mycursor.execute(sql)
-        
-        records = mycursor.fetchall()
-       
+        try:
+            records = mycursor.fetchall()
+        except:
+            mycursor.close()
+            db.close()
+            return []
         results = []
         for row in records:
             row = list(row)
@@ -95,17 +101,20 @@ class StatisticConnector:
                     order by fordate"
         print(sql)
         db = mysql.connector.connect(
-                                    host="database",
-                                    user=self.config.db_username,
-                                    password=self.config.db_password,
-                                    database=self.config.db_name
-                                    )     
+                                            host="localhost",
+                                            user=self.config.db_username,
+                                            password=self.config.db_password,
+                                            database=self.config.db_name
+                                            )     
         mycursor = db.cursor()
         
         mycursor.execute(sql)
-        
-        records = mycursor.fetchall()
-        
+        try:
+            records = mycursor.fetchall()
+        except:
+            mycursor.close()
+            db.close()
+            return []
         results = []
         for row in records:
             row = list(row)

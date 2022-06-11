@@ -309,3 +309,6 @@ class SubjectConnector:
         mycursor.close()
         db.close()
         return results
+
+
+

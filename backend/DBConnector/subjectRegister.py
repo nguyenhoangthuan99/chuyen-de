@@ -45,7 +45,7 @@ class subjectRegisterConnector:
             mycursor.execute(sql)
             
         except mysql.connector.Error as error:
-            print("Failed to count all record from database rollback: {}".format(error))
+            print("Failed to insert record to database rollback: {}".format(error))
         try:
             records = mycursor.fetchall()
         except:
@@ -82,7 +82,7 @@ class subjectRegisterConnector:
             mycursor.execute(sql)
             
         except mysql.connector.Error as error:
-            print("Failed to find record from database rollback: {}".format(error))
+            print("Failed to insert record to database rollback: {}".format(error))
         try:
             records = mycursor.fetchall()
         except:

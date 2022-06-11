@@ -8,11 +8,11 @@ from typing import List, Optional
 class classRegisterConnector:
     def __init__(self, ):
         self.config = Settings()
+        
     def object2data(self,account:Class_Reg):
         account = account.dict()
         account = tuple(list(account.values()))
         return account
-
     async def count(self,semester,classId):
         sql = f"select count(*) from classregister where semester={semester} and classId={classId}"
         print(sql)    
@@ -28,11 +28,9 @@ class classRegisterConnector:
             mycursor.execute(sql)
             
         except mysql.connector.Error as error:
-            print("Failed to count all records from database rollback: {}".format(error))
+            print("Failed to insert record to database rollback: {}".format(error))
         try:
             records = mycursor.fetchall()
-            ##
-            print(records)
         except:
             return 0
         
@@ -66,11 +64,9 @@ class classRegisterConnector:
             mycursor.execute(sql)
             
         except mysql.connector.Error as error:
-            print("Failed to get record from database rollback: {}".format(error))
+            print("Failed to insert record to database rollback: {}".format(error))
         try:
             records = mycursor.fetchall()
-            ##
-            print(records)
         except:
             return []
         results = []
@@ -88,26 +84,26 @@ class classRegisterConnector:
         return results
 
     
-    # def do_query(self,accounts:List[tuple],sql_other:str):   
-    #     db = mysql.connector.connect(
-    #                                         host="localhost",
-    #                                         user=self.config.db_username,
-    #                                         password=self.config.db_password,
-    #                                         database=self.config.db_name
-    #                                         )     
-    #     mycursor = db.cursor()
-    #     try:
-    #         mycursor.executemany(sql_other,accounts)
-    #         db.commit()
-    #     except mysql.connector.Error as error:
-    #         print("Failed to update record to database rollback: {}".format(error))
-    # # reverting changes because of exception
-    #         db.rollback()
-    #         mycursor.close()
-    #         db.close()
-    #         raise HTTPException(status_code=422, detail="Failed to update record to database rollback: {}".format(error))
-    #     mycursor.close()
-    #     db.close()
+    def do_query(self,accounts:List[tuple],sql_other:str):   
+        db = mysql.connector.connect(
+                                            host="localhost",
+                                            user=self.config.db_username,
+                                            password=self.config.db_password,
+                                            database=self.config.db_name
+                                            )     
+        mycursor = db.cursor()
+        try:
+            mycursor.executemany(sql_other,accounts)
+            db.commit()
+        except mysql.connector.Error as error:
+            print("Failed to update record to database rollback: {}".format(error))
+    # reverting changes because of exception
+            db.rollback()
+            mycursor.close()
+            db.close()
+            raise HTTPException(status_code=422, detail="Failed to update record to database rollback: {}".format(error))
+        mycursor.close()
+        db.close()
 
     async def classreg_insert(self, classreg: List[Class_Reg]):
         aaa = []

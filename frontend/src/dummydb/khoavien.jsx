@@ -1,7 +1,7 @@
 export const listkhoavien = [
   {
     value: "KCNTT",
-    label: "Trường Công nghệ thông tin & Truyền thông",
+    label: "Viện Công nghệ thông tin & Truyền thông",
   },
   {
     value: "KCK",
