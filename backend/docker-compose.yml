@@ -5,7 +5,7 @@ services:
     image: mysql:latest
     restart: always
 
-    network_mode: host
+    #network_mode: host
     volumes:
       - ./data:/var/lib/mysql
     logging:
@@ -21,11 +21,11 @@ services:
       "--max_connections=10000"
 
   backend:
-    image: da-httt:latest
+    image: chuyen-de:latest
     restart: always
     build:
       context: .
-    network_mode: host
+    #network_mode: host
     volumes:
       - ./:/app
     logging:

@@ -9,7 +9,7 @@ class AccountConnector:
         self.config = Settings()
         """
         self.db = mysql.connector.connect(
-                                            host="database",
+                                            host="localhost",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -34,9 +34,10 @@ class AccountConnector:
         account = tuple(list(account.values()))
         return account
 
+
     def do_query(self,accounts:List[tuple],sql_other:str):   
         db = mysql.connector.connect(
-                                            host="database",
+                                            host="localhost",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -79,10 +80,9 @@ class AccountConnector:
            # print(students)
             self.do_query(students,self.sql_insert_student)
         return True
-
     async def lock(self,Id,status):
         db = mysql.connector.connect(
-                                            host="database",
+                                            host="localhost",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -125,10 +125,9 @@ class AccountConnector:
             print(students)
             self.do_query(students,self.sql_update_student)
         return True
-
     async def update_password(self,Id,hashed_password):
         db = mysql.connector.connect(
-                                            host="database",
+                                            host="localhost",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -147,9 +146,10 @@ class AccountConnector:
         db.close()
         return True
         
+
     def do_search(self,sql:str):
         db = mysql.connector.connect(
-                                            host="database",
+                                            host="localhost",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -183,18 +183,20 @@ class AccountConnector:
                 program = row[12] ,
                 schoolId = row[13] ,
                 maxcredit = int(row[14]) if row[14] is not None else None, 
-            ))          
+            ))    
+        
         mycursor.close()
         db.close()
         return results
     def do_count(self,sql:str):
         db = mysql.connector.connect(
-                                            host="database",
+                                            host="localhost",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
                                             )     
-        mycursor = db.cursor()        
+        mycursor = db.cursor()
+        
         mycursor.execute(sql)
         result=mycursor.fetchone()
         mycursor.close()
@@ -213,7 +215,8 @@ class AccountConnector:
             sql = "select * from Account "
         else:
             sql = "select count(*) from Account "
-        i = 0        
+        i = 0
+        
         accepted = []
         for key, value in kwargs.items(): 
             if value is None: continue
@@ -229,9 +232,11 @@ class AccountConnector:
                 sql += "WHERE "+str(key)+"="+val+" AND "
             
             else:
-                sql += str(key)+"="+val+" AND "            
+                sql += str(key)+"="+val+" AND "
+            
             i+=1
         if sql[-4:] == "AND " :
+
             sql = sql[:-4]+" "
         if (limit is not None) and (offset is not None) and (count == 0):    
             sql += "LIMIT "+str(limit)+" OFFSET "+str(offset)
@@ -246,7 +251,7 @@ class AccountConnector:
 
     async def count_account_like_id(self,Id,role):
         db = mysql.connector.connect(
-                                            host="database",
+                                            host="localhost",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -255,6 +260,7 @@ class AccountConnector:
         sql = f"select count(*) from Account where Id like '%{Id}%' and role={role}"
         print(sql)
         mycursor.execute(sql)
+        
         try:
             records = mycursor.fetchall()
         except:
@@ -268,10 +274,9 @@ class AccountConnector:
         mycursor.close()
         db.close()
         return results[0]
-    
     async def get_account_like_id(self,Id,role,limit,offset):
         db = mysql.connector.connect(
-                                            host="database",
+                                            host="localhost",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -280,6 +285,7 @@ class AccountConnector:
         sql = f"select * from Account where Id like '%{Id}%' and role={role} limit {limit} offset {offset}"
         print(sql)
         mycursor.execute(sql)
+        
         try:
             records = mycursor.fetchall()
         except:
@@ -313,7 +319,7 @@ class AccountConnector:
 
     async def get_account_by_id(self,Id=None,email=None):
         db = mysql.connector.connect(
-                                            host="database",
+                                            host="localhost",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name

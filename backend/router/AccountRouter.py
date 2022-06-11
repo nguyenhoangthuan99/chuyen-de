@@ -63,6 +63,14 @@ async def register(account:RegAccount):
         id_ = random.randint(100000,1000000)
     account = Account(Id = id_,role=0,status=1,**account.dict())
     return await accountService.register([account])
+    
+@router.get("/lock/{Id}")
+async def lock(Id:str):
+    return await accountService.lock(Id,0)
+
+@router.get("/unlock/{Id}")
+async def unlock(Id:str):
+    return await accountService.lock(Id,1)
 
 @router.post("/add")
 async def add_account(account:Account):
@@ -72,6 +80,59 @@ async def add_account(account:Account):
 async def get_by_id(Id:Optional[str]=None,email:Optional[str]=None):
     accounts = await accountService.get_account_by_id(Id,email)
     return {"accounts":accountService.map_revert_role(accounts) }
+
+@router.get("/count-like-id")
+async def count_account_like_id(Id:str,role:str):
+    role = accountService.parse_role[role]
+    accounts = await accountService.count_account_like_id(Id,role)
+    return accounts
+
+@router.get("/get-like-id")
+async def get_like_id(Id:str,role:str,limit=20,offset=0):
+    role = accountService.parse_role[role]
+    accounts = await accountService.get_account_like_id(Id,role,limit,offset)
+    return {"accounts":accountService.map_revert_role(accounts) }
+
+@router.get("/count")
+async def count(Id : Optional[Union[int,str]]=None, email: Optional[str]=None, fullname: Optional[str]=None,\
+                address : Optional[str]=None, birthday: Optional[str]=None, phone: Optional[str]=None,\
+                status: Optional[int]=None, role: Optional[str]=None, schoolyear: Optional[int]=None,\
+                cmnd: Optional[str]=None, gender: Optional[str]=None,program: Optional[str]=None, \
+                schoolId : Optional[str]=None, maxcredit: Optional[int]=None,):
+    if Id == "":Id = None
+    if status == 3:status=None
+    if schoolId == "all": schoolId = None
+    role = accountService.parse_role[role]
+    return await accountService.count(Id = Id, email=email, fullname = fullname,address =address,\
+                                            birthday=birthday, phone=phone,status=status, role=role,\
+                                            schoolyear=schoolyear,cmnd=cmnd, gender=gender,program=program, \
+                                            schoolId =schoolId, maxcredit=maxcredit,)
+
+@router.get("/search")
+async def search(Id : Optional[Union[int,str]]=None, email: Optional[str]=None, fullname: Optional[str]=None,\
+                address : Optional[str]=None, birthday: Optional[str]=None, phone: Optional[str]=None,\
+                status: Optional[int]=None, role: Optional[str]=None, schoolyear: Optional[int]=None,\
+                cmnd: Optional[str]=None, gender: Optional[str]=None,program: Optional[str]=None, \
+                schoolId : Optional[str]=None, maxcredit: Optional[int]=None,limit=20,offset=0,export:int=0):
+    role = accountService.parse_role[role]
+    if Id == "":Id = None
+    if status == 3:status=None
+    if schoolId == "all": schoolId = None
+    if export == 1:
+        limit = None
+        offset = None  
+    accounts = await accountService.search( Id = Id, email=email, fullname = fullname,address =address,\
+                                            birthday=birthday, phone=phone,status=status, role=role,\
+                                            schoolyear=schoolyear,cmnd=cmnd, gender=gender,program=program, \
+                                            schoolId =schoolId, maxcredit=maxcredit,limit=limit,offset=offset)
+    accounts = accountService.map_revert_role(accounts)
+    if export == 0:    
+        return {"accounts":accounts}
+    else:
+        stream = await accountService.export_file(accounts)
+        response = StreamingResponse(iter([stream.getvalue()]),media_type="text/csv" )#"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")#
+        response.headers["Content-Disposition"] = "attachment; filename=export.csv"
+        return response
 
 @router.post("/update")
 async def update(account:Account,Id:str ):
