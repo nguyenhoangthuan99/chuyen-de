@@ -9,7 +9,7 @@ class AccountConnector:
         self.config = Settings()
         """
         self.db = mysql.connector.connect(
-                                            host="localhost",
+                                            host="database",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -37,7 +37,7 @@ class AccountConnector:
 
     def do_query(self,accounts:List[tuple],sql_other:str):   
         db = mysql.connector.connect(
-                                            host="localhost",
+                                            host="database",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -82,7 +82,7 @@ class AccountConnector:
         return True
     async def lock(self,Id,status):
         db = mysql.connector.connect(
-                                            host="localhost",
+                                            host="database",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -127,7 +127,7 @@ class AccountConnector:
         return True
     async def update_password(self,Id,hashed_password):
         db = mysql.connector.connect(
-                                            host="localhost",
+                                            host="database",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -149,7 +149,7 @@ class AccountConnector:
 
     def do_search(self,sql:str):
         db = mysql.connector.connect(
-                                            host="localhost",
+                                            host="database",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -190,7 +190,7 @@ class AccountConnector:
         return results
     def do_count(self,sql:str):
         db = mysql.connector.connect(
-                                            host="localhost",
+                                            host="database",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -251,7 +251,7 @@ class AccountConnector:
 
     async def count_account_like_id(self,Id,role):
         db = mysql.connector.connect(
-                                            host="localhost",
+                                            host="database",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -276,7 +276,7 @@ class AccountConnector:
         return results[0]
     async def get_account_like_id(self,Id,role,limit,offset):
         db = mysql.connector.connect(
-                                            host="localhost",
+                                            host="database",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -319,7 +319,7 @@ class AccountConnector:
 
     async def get_account_by_id(self,Id=None,email=None):
         db = mysql.connector.connect(
-                                            host="localhost",
+                                            host="database",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name

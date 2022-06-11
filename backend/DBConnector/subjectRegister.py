@@ -11,7 +11,7 @@ class subjectRegisterConnector:
         self.config = Settings()
         """
         self.db = mysql.connector.connect(
-                                            host="localhost",
+                                            host="database",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -34,7 +34,7 @@ class subjectRegisterConnector:
         sql = f"select count(*) from subjectregister where semester={semester} and subjectId='{subjectId}'"
         print(sql)    
         db = mysql.connector.connect(
-                                            host="localhost",
+                                            host="database",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -71,7 +71,7 @@ class subjectRegisterConnector:
         else:
             sql = f"select * from subjectregister where semester={semester} and subjectId='{subjectId}' limit {limit} offset {offset}"
         db = mysql.connector.connect(
-                                            host="localhost",
+                                            host="database",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -113,7 +113,7 @@ class subjectRegisterConnector:
 
         aaa = [self.object2data(x) for x in aaa]
         db = mysql.connector.connect(
-                                            host="localhost",
+                                            host="database",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -140,7 +140,7 @@ class subjectRegisterConnector:
             aaa.append((Id, subid,semester))
 
         db = mysql.connector.connect(
-                                            host="localhost",
+                                            host="database",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name

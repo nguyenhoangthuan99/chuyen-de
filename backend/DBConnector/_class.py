@@ -10,7 +10,7 @@ class ClassConnector:
         self.config = Settings()
         """
         self.db = mysql.connector.connect(
-                                            host="localhost",
+                                            host="database",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -41,7 +41,7 @@ class ClassConnector:
 
     def do_query(self, _classes: List[tuple], sql_other: str):
         db = mysql.connector.connect(
-            host="localhost",
+            host="database",
             user=self.config.db_username,
             password=self.config.db_password,
             database=self.config.db_name
@@ -83,7 +83,7 @@ class ClassConnector:
 
     def do_search(self, sql: str):
         db = mysql.connector.connect(
-            host="localhost",
+            host="database",
             user=self.config.db_username,
             password=self.config.db_password,
             database=self.config.db_name
@@ -118,7 +118,7 @@ class ClassConnector:
 
     def do_count(self, sql: str):
         db = mysql.connector.connect(
-            host="localhost",
+            host="database",
             user=self.config.db_username,
             password=self.config.db_password,
             database=self.config.db_name
@@ -189,7 +189,7 @@ class ClassConnector:
         return results
     async def count_class_like_id(self,classId):
         db = mysql.connector.connect(
-            host="localhost",
+            host="database",
             user=self.config.db_username,
             password=self.config.db_password,
             database=self.config.db_name
@@ -214,7 +214,7 @@ class ClassConnector:
         return results[0]
     async def count_class_like_subjectId(self,subjectId,semester):
         db = mysql.connector.connect(
-            host="localhost",
+            host="database",
             user=self.config.db_username,
             password=self.config.db_password,
             database=self.config.db_name
@@ -239,7 +239,7 @@ class ClassConnector:
         return results[0]
     async def get_class_like_subjectId(self,subjectId,semester,limit,offset):
         db = mysql.connector.connect(
-            host="localhost",
+            host="database",
             user=self.config.db_username,
             password=self.config.db_password,
             database=self.config.db_name
@@ -275,7 +275,7 @@ class ClassConnector:
         return results
     async def get_class_like_id(self,classId,limit,offset):
         db = mysql.connector.connect(
-            host="localhost",
+            host="database",
             user=self.config.db_username,
             password=self.config.db_password,
             database=self.config.db_name
@@ -312,7 +312,7 @@ class ClassConnector:
 
     async def search_collision(self,semester,location,day,timeStart,timeEnd):
         db = mysql.connector.connect(
-            host="localhost",
+            host="database",
             user=self.config.db_username,
             password=self.config.db_password,
             database=self.config.db_name
@@ -346,7 +346,7 @@ class ClassConnector:
         return results
     async def get_class_by_id(self, Id=None):
         db = mysql.connector.connect(
-            host="localhost",
+            host="database",
             user=self.config.db_username,
             password=self.config.db_password,
             database=self.config.db_name
