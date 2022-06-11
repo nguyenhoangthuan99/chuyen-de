@@ -11,7 +11,7 @@ class SubjectConnector:
         self.config = Settings()
         """
         self.db = mysql.connector.connect(
-                                            host="localhost",
+                                            host="database",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -62,7 +62,7 @@ class SubjectConnector:
 
     def do_query(self, data: List[tuple], sql_other: str):
         db = mysql.connector.connect(
-            host="localhost",
+            host="database",
             user=self.config.db_username,
             password=self.config.db_password,
             database=self.config.db_name
@@ -109,7 +109,7 @@ class SubjectConnector:
 
     async def update_status(self, subjectId: str, status: int):
         db = mysql.connector.connect(
-            host="localhost",
+            host="database",
             user=self.config.db_username,
             password=self.config.db_password,
             database=self.config.db_name
@@ -132,7 +132,7 @@ class SubjectConnector:
 
     def do_search(self, sql: str,count=0):
         db = mysql.connector.connect(
-            host="localhost",
+            host="database",
             user=self.config.db_username,
             password=self.config.db_password,
             database=self.config.db_name
@@ -158,7 +158,7 @@ class SubjectConnector:
 
     def do_count(self,sql:str):
         db = mysql.connector.connect(
-                                            host="localhost",
+                                            host="database",
                                             user=self.config.db_username,
                                             password=self.config.db_password,
                                             database=self.config.db_name
@@ -207,7 +207,7 @@ class SubjectConnector:
         
         sql = f"select subjectId from Subject where status={status}"
         db = mysql.connector.connect(
-            host="localhost",
+            host="database",
             user=self.config.db_username,
             password=self.config.db_password,
             database=self.config.db_name
@@ -230,7 +230,7 @@ class SubjectConnector:
         return results
     async def count_subject_like_id(self,subjectID):
         db = mysql.connector.connect(
-            host="localhost",
+            host="database",
             user=self.config.db_username,
             password=self.config.db_password,
             database=self.config.db_name
@@ -257,7 +257,7 @@ class SubjectConnector:
         return results[0]
     async def get_subject_like_id(self,subjectID,limit,offset):
         db = mysql.connector.connect(
-            host="localhost",
+            host="database",
             user=self.config.db_username,
             password=self.config.db_password,
             database=self.config.db_name
@@ -285,7 +285,7 @@ class SubjectConnector:
 
     async def get_subject_by_id(self, subjectID: Text):
         db = mysql.connector.connect(
-            host="localhost",
+            host="database",
             user=self.config.db_username,
             password=self.config.db_password,
             database=self.config.db_name

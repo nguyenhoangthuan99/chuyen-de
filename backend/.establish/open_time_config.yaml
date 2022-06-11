@@ -1,0 +1,37 @@
+subject:
+  start_time: 2021-11-01T10:30
+  end_time: 2022-02-03T10:30
+  meta:
+    establish_time: 1641483218.2227674
+class:
+  start_time: 2021-11-01T10:30
+  end_time: 2022-02-02T10:30
+  timeframe:
+    first_year:
+      start_time: 00:00
+      end_time: 06:00
+    second_year:
+      start_time: 06:00
+      end_time: '21:00'
+    third_year:
+      start_time: '12:00'
+      end_time: 06:00
+    fourth_year:
+      start_time: '18:00'
+      end_time: '21:00'
+    last_year:
+      start_time: 00:00
+      end_time: '23:59'
+  meta:
+    establish_time: 1641200641.862172
+semester:
+  list:
+    20201: 20201
+    20202: 20202
+    20211: 20211
+    20212: 20212
+    20221: 20221
+    20222: 20222
+  config:
+    class: 20212
+    subject: 20212
