@@ -30,7 +30,7 @@ class ClassConnector:
         limit = _class.limit
         if (day < 2) or (day > 7) or (timeStart < 1) or (timeStart > 12) or (timeEnd < 1) or (timeEnd > 12) or (
                 limit < 0) or (timeEnd < timeStart):
-            raise HTTPException(status_code=422, detail="Invalid Schema")
+            raise HTTPException(status_code=422, detail="Vui lòng kiểm tra lại thời gian khóa biểu của lớp")
         return True
 
     def object2data(self, _class: Class):
