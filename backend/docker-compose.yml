@@ -3,7 +3,7 @@ version: "3.5"
 services:
   database:
     image: mysql:latest
-    restart: always
+  #  restart: always
 
     #network_mode: host
     volumes:
@@ -24,7 +24,7 @@ services:
 
   backend:
     image: chuyen-de:latest
-    restart: always
+    #restart: always
     build:
       context: .
     #network_mode: host

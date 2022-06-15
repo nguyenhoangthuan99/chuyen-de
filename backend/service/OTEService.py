@@ -24,7 +24,7 @@ class OTEService:
         if this_month > 9:
             study_year = course_now - school_year + 1
         else:
-            study_year = course_now - started_year
+            study_year = course_now - school_year
 
         if study_year == 1:
             return "first_year"
@@ -95,8 +95,8 @@ class OTEService:
     def update_subject_ote(self, config):
         if self._parse_time(config["start_time"]) > self._parse_time(config["end_time"]):
             raise HTTPException(status_code=410, detail="thời gian kết thúc sau thời gian bắt đầu")
-        if self._parse_time(config["end_time"]) < datetime.datetime.now():
-            raise HTTPException(status_code=410, detail="thời gian mở đăng kí đã qua")
+        # if self._parse_time(config["end_time"]) < datetime.datetime.now():
+        #     raise HTTPException(status_code=410, detail="thời gian mở đăng kí đã qua")
         establish_time = time.time()
         config["meta"]={}
         config["meta"]["establish_time"] = establish_time
@@ -114,6 +114,7 @@ class OTEService:
         config["meta"]={}
         config["meta"]["establish_time"] = establish_time
         self.config["class"] = config
+        print(self.config)
         self.save_config()
         return True
 
@@ -155,6 +156,7 @@ class OTEService:
             return datetime.datetime.strptime(t, "%Y-%m-%dT%H:%M:%S")
 
     async def validate_regis_subject_time(self):
+        self.load_config()
         start_time = self._parse_time(self.config["subject"]["start_time"])
         end_time = self._parse_time(self.config["subject"]["end_time"])
 
@@ -189,8 +191,10 @@ class OTEService:
             return False
     """
     async def validate_regis_class_time(self, student: Account):
+        self.load_config()
         if os.environ.get("MODE") == "docker":
             now = datetime.datetime.now() +datetime.timedelta(hours=7)
+            print("now",now)
         else:
             now = datetime.datetime.now()
         start_time = self._parse_time(self.config["class"]["start_time"])
