@@ -9,7 +9,7 @@ import * as yup from "yup";
 import classApi from "../api/classApi";
 import { LIMIT_PAGE_DEFAULT } from "../dummydb/dataDefault";
 import "./style.scss";
-
+import { TimeStartConvert, TimeEndConvert } from "../dummydb/time";
 function Thongtinlopmo({ semesterDk }) {
   const [searchLike, setSearchLike] = useState("");
   const [datas, setDatas] = useState([]);
@@ -163,7 +163,8 @@ function Thongtinlopmo({ semesterDk }) {
               <th>Số tín chỉ</th>
               <th>Đã đăng kí</th>
               <th>Tối đa</th>
-              <th>Thêm vào D/S đăng kí</th>
+              <th>Thứ</th>
+              <th>Thời gian</th>
             </tr>
             {datas.map((data, index) => (
               <tr key={index}>
@@ -174,8 +175,10 @@ function Thongtinlopmo({ semesterDk }) {
                 <td>{data.credit}</td>
                 <td>{data.registered}</td>
                 <td>{data.limit}</td>
-                <td className="them" onClick={() => handleThem(data)}>
-                  <PlusCircleOutlined />
+                <td>{data.day}</td>
+                <td>
+                  {TimeStartConvert[data.timeStart]} -{" "}
+                  {TimeEndConvert[data.timeEnd]}
                 </td>
               </tr>
             ))}
