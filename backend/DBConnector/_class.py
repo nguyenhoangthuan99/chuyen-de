@@ -319,7 +319,7 @@ class ClassConnector:
         )
         my_cursor = db.cursor()
         
-        my_cursor.execute(f"SELECT * FROM Class WHERE day={day} and location = '{location}' and semester = {semester} and status = 1  AND ((timeStart >= {timeStart} and timeStart <= {timeEnd}) or (timeEnd>={timeStart} AND timeEnd <= {timeEnd}) or (timeStart<={timeStart} and timeEnd >= {timeEnd}))")
+        my_cursor.execute(f"SELECT * FROM Class WHERE day={day} and location = '{location}' and semester = {semester} and status = 1  AND ((timeStart >= {timeStart} and timeStart <= {timeEnd}) or (timeEnd>={timeStart} AND timeEnd <= {timeEnd}) or (timeStart<={timeStart} and timeEnd >= {timeEnd}) or (timeStart>={timeStart} and timeEnd <= {timeEnd}))")
         try:
             records = my_cursor.fetchall()
         except:

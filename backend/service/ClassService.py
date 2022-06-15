@@ -39,6 +39,7 @@ class ClassService:
         return res
     async def search_collision(self,class_:Class):
         res = await self.connector.search_collision(semester=class_.semester,day=class_.day,location=class_.location,timeEnd=class_.timeEnd,timeStart=class_.timeStart)
+        print(res)
         if len(res) and (class_.classId != res[0].classId):
             raise HTTPException(status_code=422, detail=f"lớp {class_.classId} trùng thời khóa biểu với lớp {res[0].classId}")
     async def transform(self,classes:List[Class]):
@@ -78,6 +79,9 @@ class ClassService:
     async def count(self, **kwargs):
         return await self.connector.search(count=1, **kwargs)
     async def update (self,classes:List[Class]):
+        await self.search_collision(classes)
+        classes = await self.aggerate(classes)
+        classes = await self.transform(classes)
         return await self.connector.update(classes)
     async def update_one(self, _class: Class):
         await self.search_collision(_class)
@@ -102,6 +106,7 @@ class ClassService:
     async def import_file(self, content):
         df = CSVUtils.read_content(content)
         _classes = CSVUtils.validate_class(df)
+        _classes = await self.aggerate(_classes)
         for _class in _classes:
             await self.search_collision(_class)
         res = await self.connector.insert(_classes)
