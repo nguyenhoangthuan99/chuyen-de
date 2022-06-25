@@ -62,7 +62,7 @@ const App = () => {
           </div>
           <div className="header-title">
             <h3>ĐĂNG KÍ HỌC TẬP</h3>
-            <h2>TRƯỜNG ĐẠI HỌC BÁCH KHÓA HÀ NỘI</h2>
+            <h2>TRƯỜNG ĐẠI HỌC BÁCH KHOA HÀ NỘI</h2>
           </div>
           {user && <Logout handleLogout={handleLogout} user={user} />}
         </div>
