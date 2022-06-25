@@ -79,7 +79,7 @@ class ClassService:
     async def count(self, **kwargs):
         return await self.connector.search(count=1, **kwargs)
     async def update (self,classes:List[Class]):
-        await self.search_collision(classes)
+       # await self.search_collision(classes)
         classes = await self.aggerate(classes)
         classes = await self.transform(classes)
         return await self.connector.update(classes)

@@ -165,6 +165,7 @@ function Thongtinlopmo({ semesterDk }) {
               <th>Tối đa</th>
               <th>Thứ</th>
               <th>Thời gian</th>
+              <th>Địa điểm</th>
             </tr>
             {datas.map((data, index) => (
               <tr key={index}>
@@ -180,6 +181,7 @@ function Thongtinlopmo({ semesterDk }) {
                   {TimeStartConvert[data.timeStart]} -{" "}
                   {TimeEndConvert[data.timeEnd]}
                 </td>
+                <td>{data.location}</td>
               </tr>
             ))}
           </table>
