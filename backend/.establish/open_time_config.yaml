@@ -2,7 +2,7 @@ subject:
   start_time: 2021-11-17T10:30
   end_time: 2022-06-30T10:30
   meta:
-    establish_time: 1656151515.8092036
+    establish_time: 1656253831.1421723
 class:
   start_time: 2021-11-01T10:30
   end_time: 2022-12-02T10:30
@@ -32,6 +32,7 @@ semester:
     20212: 20212
     20221: 20221
     20222: 20222
+    20213: 20213
   config:
     class: 20212
     subject: 20212

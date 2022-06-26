@@ -419,7 +419,7 @@ export const ImportFile = () => {
   const { register, handleSubmit } = useForm();
   const { enqueueSnackbar } = useSnackbar();
   const handleImport = async (value) => {
-    console.log(value.file[0]);
+   // console.log(value.file[0]);
     try {
       const data = new FormData();
       data.append("file", value.file[0]);

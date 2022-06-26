@@ -17,10 +17,10 @@ async def main():
     students = await accountService.search(status=1,role=1,limit=10000)
     print(len(students))
     
-    classes = await classService.search(status=1,semester = 20211,limit=10000)
+    classes = await classService.search(status=1,semester = 20212,limit=10000)
     print(len(classes))
     semester = 20211
-    d = datetime(year=2021,month=12,day=1)
+    d = datetime(year=2022,month=6,day=1)
     for i in range(30):
         num = random.randint(1,60)
         n = 0

@@ -22,7 +22,7 @@ import {
 import { listkhoavien } from "../dummydb/khoavien";
 import { schoolyears } from "../dummydb/schoolyear";
 import "./style2.css";
-
+const gender_map ={"nam":"Nam","nu":"Nữ"}
 function Thongtincanhan({ user }) {
   const [valueGender, setValueGender] = useState(GENDER_DEFAULT);
   const [khoavien, setKhoavien] = useState(SCHOOL_ID_DEFAULT);
@@ -141,6 +141,7 @@ function Thongtincanhan({ user }) {
               variant="outlined"
               margin="dense"
               fullWidth
+              disabled
             />
             <p style={{ color: "red", fontSize: "12px", textAlign: "left" }}>
               <ErrorMessage errors={errors} name="fullname" />
@@ -233,6 +234,7 @@ function Thongtincanhan({ user }) {
               fullWidth
               placeholder="Chưa cập nhật"
               type="number"
+              disabled
             />
             <p style={{ color: "red", fontSize: "12px", textAlign: "left" }}>
               <ErrorMessage errors={errors} name="cmnd" />
@@ -251,6 +253,7 @@ function Thongtincanhan({ user }) {
               margin="dense"
               fullWidth
               placeholder="Chưa cập nhật"
+              disabled
             />
           </div>
         </div>
@@ -266,16 +269,10 @@ function Thongtincanhan({ user }) {
               variant="outlined"
               margin="dense"
               fullWidth
-              select
+              disabled
               value={valueSchoolyear}
-              onChange={handleChangeSchoolyear}
-            >
-              {schoolyears.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
+             
+            />
           </div>
         </div>
         <p></p>
@@ -290,16 +287,9 @@ function Thongtincanhan({ user }) {
               variant="outlined"
               margin="dense"
               fullWidth
-              select
+              disabled
               value={khoavien}
-              onChange={handleChangeKhoavien}
-            >
-              {listkhoavien.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
+            />
           </div>
         </div>
         <p></p>
@@ -316,6 +306,7 @@ function Thongtincanhan({ user }) {
               fullWidth
               type="number"
               placeholder="Chưa cập nhật"
+              disabled
             />
           </div>
         </div>
@@ -324,27 +315,17 @@ function Thongtincanhan({ user }) {
         <div className="thongtincanhan-contents">
           <div className="thongtincanhan-contents-label">Giới tính:</div>
           <div className="thongtincanhan-contents-input">
-            <RadioGroup
-              row
-              aria-label="gender"
-              name="row-radio-buttons-group"
-              style={{ marginTop: "5px" }}
-              onChange={handleChangeGender}
-              value={valueGender}
-            >
-              <FormControlLabel
-                {...register("gender")}
-                value="nam"
-                control={<Radio />}
-                label="Nam"
-              />
-              <FormControlLabel
-                {...register("gender")}
-                value="nu"
-                control={<Radio />}
-                label="Nữ"
-              />
-            </RadioGroup>
+          <TextField
+              {...register("gender")}
+              name="gender"
+              className="outlined-basic"
+              variant="outlined"
+              margin="dense"
+              fullWidth
+              placeholder="Chưa cập nhật"
+              disabled
+            />
+            
           </div>
         </div>
         <div className="thongtincanhan-contents">
